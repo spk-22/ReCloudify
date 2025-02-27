@@ -2,6 +2,67 @@ Project Name: ReCloudify
 
 ReCloudify enables users to repurpose old laptops as remote storage devices, creating a personal cloud. Using a client-server model with socket programming, data can be seamlessly stored and accessed over a network. This decentralized approach offers cost-effective, private, and expandable storage without relying on third-party cloud providers.
 
+Remote File Access Management System :
+
+This C program implements a simple file management system that allows users to upload, list, rename, and delete files in a designated directory (`./uploads`). The system ensures thread-safe operations using mutex locks, making it suitable for concurrent use.  
+
+Features :
+- List Files: View all files stored in the `uploads` directory.  
+- Upload Files: Create new files and store content provided by the user.  
+- Rename Files: Change the name of an existing file.  
+- Delete Files: Remove unwanted files from the directory.  
+- Thread-Safe Operations: Uses mutex locks to prevent data corruption when multiple users access files simultaneously.  
+
+How It Works
+1. The program ensures that the `uploads` directory exists before performing any operations.  
+2. Users interact with the **menu-driven interface** to manage files.  
+3. All file operations are wrapped in **pthread mutex locks** to ensure safe access in multi-threaded environments.  
+4. The program continues running until the user chooses to exit.  
+
+Usage : 
+
+Compilation and Execution 
+To compile and run the program, use:  
+```bash
+gcc file_manager.c -o file_manager -lpthread
+./file_manager
+```  
+
+Menu Options 
+1️⃣ List Files – Displays all files in the `uploads` directory.  
+2️⃣ Upload File – Creates a new file and saves user input as content.  
+3️⃣ Rename File – Renames an existing file to a new name.  
+4️⃣ Delete File – Deletes a file from the directory.  
+5️⃣ Exit – Closes the program safely.  
+
+Example Usage 
+```
+=== File Operations Menu ===  
+1. List Files  
+2. Upload File  
+3. Rename File  
+4. Delete File  
+5. Exit  
+Choose an option: 2  
+
+Enter the filename to upload: notes.txt  
+Enter content for the file: This is a sample note.  
+File 'notes.txt' uploaded successfully.  
+```  
+
+Why Use This Program? 
+✔ Efficient File Handling – Quickly manages files without using a GUI.  
+✔ Thread-Safe – Ensures safe access to files using mutex locks.  
+✔ Lightweight & Fast – Runs efficiently on low-resource systems.  
+✔ No Dependencies – Requires only standard C libraries and POSIX threading.  
+
+Future Enhancements
+- Add network-based file upload using sockets.  
+- Implement encryption for secure file storage.  
+- Provide user authentication to restrict access.  
+
+---
+
 I. Valgrind Helgrind: Detecting Threading Issues
 
 What is Valgrind?
