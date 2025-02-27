@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #A5D6A7;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #d32f2f;
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .upload-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .upload-btn:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
+    </style>
+    <script>
+        function deleteFile(filename) {
+            if (confirm(`Are you sure you want to delete '${filename}'?`)) {
+                fetch(`/delete/${filename}`, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        location.reload();
+                    })
+                    .catch(err => console.error(err));
+            }
+        }
+        function renameFile(oldName) {
+            const newName = prompt(`Rename '${oldName}' to:`);
+            if (newName) {
+                fetch('/rename', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ old_name: oldName, new_name: newName })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        location.reload();
+                    })
+                    .catch(err => console.error(err));
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>File Manager</h1>
+    </header>
+    <main>
+        <h2>Files List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Size (bytes)</th>
+                    <th>Last Modified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td><a href="{{ url_for('download_file', filename=file.name) }}">{{ file.name }}</a></td>
+                    <td>{{ file.size }}</td>
+                    <td>{{ file.modified }}</td>
+                    <td>
+                        <button onclick="deleteFile('{{ file.name }}')">Delete</button>
+                        <button onclick="renameFile('{{ file.name }}')">Rename</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="upload-section">
+            <h2>Upload a New File</h2>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <br>
+                <button type="submit" class="upload-btn">Upload</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 File Manager. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
