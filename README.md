@@ -4,7 +4,8 @@ ReCloudify enables users to repurpose old laptops as remote storage devices, cre
 
 Remote File Access Management System :
 
-This C program implements a simple file management system that allows users to upload, list, rename, and delete files in a designated directory (`./uploads`). The system ensures thread-safe operations using mutex locks, making it suitable for concurrent use.  
+1. This C program implements a simple file management system that allows users to upload, list, rename, and delete files in a designated directory (`./uploads`). The system ensures thread-safe operations using mutex locks, making it suitable for concurrent use.
+2. A File Manager is also created to demonstrate the same operations with an interactive GUI. It is built using Python and Flask, The database is mainatined in json format.
 
 Features :
 - List Files: View all files stored in the `uploads` directory.  
@@ -29,6 +30,7 @@ gcc file_manager.c -o file_manager -lpthread
 ```  
 
 Menu Options 
+
 1️⃣ List Files – Displays all files in the `uploads` directory.  
 2️⃣ Upload File – Creates a new file and saves user input as content.  
 3️⃣ Rename File – Renames an existing file to a new name.  
@@ -51,6 +53,7 @@ File 'notes.txt' uploaded successfully.
 ```  
 
 Why Use This Program? 
+
 ✔ Efficient File Handling – Quickly manages files without using a GUI.  
 ✔ Thread-Safe – Ensures safe access to files using mutex locks.  
 ✔ Lightweight & Fast – Runs efficiently on low-resource systems.  
@@ -115,3 +118,4 @@ The above command allows to open multiple terminals, one being the server and th
 
 Telnet : 
 You can use Telnet to manually test your server, check connectivity, and debug responses. It provides a simple way to interact with your application without needing a dedicated client interface.
+
